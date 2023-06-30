@@ -44,7 +44,7 @@ class Solution
                 int nrow = row + rowd[i];
                 int ncol = col + cold[i];
                 
-                if(nrow >=0 && nrow <n && ncol >=0 && ncol<m && !vis[nrow][ncol]){
+                if(nrow >=0 && nrow <n && ncol >=0 && ncol<m && !vis[nrow][ncol] && grid[nrow][ncol] == 0){
                     vis[nrow][ncol] = 1;
                     q.push({distance + 1 , {nrow,ncol}});
                 }

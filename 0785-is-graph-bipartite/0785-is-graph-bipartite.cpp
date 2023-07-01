@@ -25,6 +25,21 @@ bool bfs(int start , vector<vector<int>>graph , vector<int>&colour){
         
         
 }
+bool dfs(int start , vector<vector<int>>graph , vector<int>&colour,int parent){
+        
+        colour[start] = parent;
+        
+        for(auto it : graph[start]){
+                if(colour[it] == -1){
+                              if( dfs(it,graph,colour,!parent)== false) return false;
+                        }else if( colour[it] == colour[start]){
+                                return false;
+                        }
+        }
+        return true;
+        
+}
+        
     bool isBipartite(vector<vector<int>>& graph) {
           int n = graph.size();
   
@@ -33,7 +48,7 @@ bool bfs(int start , vector<vector<int>>graph , vector<int>&colour){
      
             for(int i = 0 ; i < n ;i++){
                     if(colour[i] == -1){
-                           if(bfs(i,graph,colour) == false)return false;
+                           if(dfs(i,graph,colour,0) == false)return false;
                             
                     }
             }

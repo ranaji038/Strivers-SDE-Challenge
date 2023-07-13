@@ -15,17 +15,12 @@ class Solution{
         long long ans = INT_MIN , curr = 0;
         for(int i = 0 ; i < n ;i++){
             curr += arr[i];
+              ans = max(curr,ans);
             if(curr < 0) curr =0;
-            ans = max(curr,ans);
+          
             
         }
-        if(ans == 0){
-            int mini = INT_MIN;
-            for(int i = 0 ; i < n ;i++){
-                mini = max(mini , arr[i]);
-            }
-            return mini;
-        }
+    
         
         return ans;
     }

@@ -101,35 +101,54 @@ class Solution
         return sum(root->left) + sum(root->right) + root->data;
     }
     public:
+    pair<bool,int> check(Node * root){
+        if(!root) return {true,0};
+        
+        if(!root->left && !root->right) return { true , root->data};
+        
+        pair<bool,int> lefti = check(root->left);
+        pair<bool,int> righti = check(root->right);
+        
+        
+        if(lefti.first & righti.first & lefti.second + righti.second == root->data){
+            return {true,lefti.second + righti.second + root->data};
+        }else{
+              return {false,lefti.second + righti.second + root->data};
+        }
+        
+        
+        
+    }
     bool isSumTree(Node* root)
     {
-         // Your code here
-         if(root == NULL) return true;
+        //  // Your code here
+        //  if(root == NULL) return true;
          
-         if(root->left == NULL && !root->right) return true;
+        //  if(root->left == NULL && !root->right) return true;
          
-         bool left = isSumTree(root->left);
-         bool right = isSumTree(root->right);
+        //  bool left = isSumTree(root->left);
+        //  bool right = isSumTree(root->right);
          
-         int leftsum = 0 , rightsum = 0;
-         if(root->left != NULL)
-          leftsum = sum(root->left);
+        //  int leftsum = 0 , rightsum = 0;
+        //  if(root->left != NULL)
+        //   leftsum = sum(root->left);
          
-         if(root->right != NULL)
-          rightsum = sum(root->right);
-        //  cout<<leftsum<<" "<<rightsum<<endl;
+        //  if(root->right != NULL)
+        //   rightsum = sum(root->right);
+        // //  cout<<leftsum<<" "<<rightsum<<endl;
          
-         bool check ;
+        //  bool check ;
      
-         if(leftsum + rightsum == root->data) check = true;
-         else check = false;
+        //  if(leftsum + rightsum == root->data) check = true;
+        //  else check = false;
          
-         if(left & right & check){
-             return true;
-         }else {
-             return false;
-         }
+        //  if(left & right & check){
+        //      return true;
+        //  }else {
+        //      return false;
+        //  }
          
+         return check(root).first;
          
          
     }

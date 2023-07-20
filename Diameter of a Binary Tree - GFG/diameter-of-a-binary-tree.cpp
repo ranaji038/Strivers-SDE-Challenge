@@ -102,13 +102,43 @@ class Solution {
     // Function to return the diameter of a Binary Tree.
     int diameter(Node* root) {
         // Your code here
-        if(root == NULL ) return 0;
+        // if(root == NULL ) return 0;
         
-        int left = diameter(root->left);
-        int right = diameter(root->right);
+        // int left = diameter(root->left);
+        // int right = diameter(root->right);
         
-        return max(1 + height(root->left) + height(root->right) , max(left,right));
+        // return max(1 + height(root->left) + height(root->right) , max(left,right));
+        
+        return diameterpair(root).first;
+        
     }
+    
+    pair<int,int> diameterpair(Node * root){
+        if(root == NULL){
+            return {0,0};
+            
+        }
+        
+        pair<int,int> lefti = diameterpair(root->left);
+        pair<int,int> righti = diameterpair(root->right);
+        
+        int lh = lefti.second;
+        int rh = righti.second;
+        int ld = lefti.first;
+        int rd = righti.first;
+        
+        
+    int dia=max(1 + lh + rh , max(ld,rd) );
+        
+        int hei = 1 + max(lh , rh);
+        
+        return {dia,hei};
+        
+        
+        
+    }
+    
+    
 };
 
 //{ Driver Code Starts.

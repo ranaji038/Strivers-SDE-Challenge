@@ -115,17 +115,36 @@ class Solution{
     bool isBalanced(Node *root)
     {
         //  Your Code here
-        if(root == NULL) return true;
+        // if(root == NULL) return true;
         
-        int left = height(root->left);
-        int right = height(root->right);
+        // int left = height(root->left);
+        // int right = height(root->right);
         
-        if(abs(left-right) >1) return false;
+        // if(abs(left-right) >1) return false;
         
-        return isBalanced(root->left) && isBalanced(root->right);
+        // return isBalanced(root->left) && isBalanced(root->right);
         
+        return checkfunction(root).first;
+    }
+    
+    pair<bool,int> checkfunction(Node * root){
+        if(root== NULL) return {true,0};
+        
+        pair<bool,int> lefti = checkfunction(root->left);
+          pair<bool,int> righti = checkfunction(root->right);
+          
+          int resh = 1 + max(lefti.second, righti.second);
+          
+          if(abs(lefti.second - righti.second) > 1) return { false ,resh  };
+          
+         return  {lefti.first & righti.first , resh};
+          
+          
+          
         
     }
+    
+    
 };
 
 

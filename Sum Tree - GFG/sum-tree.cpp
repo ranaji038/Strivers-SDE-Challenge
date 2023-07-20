@@ -106,6 +106,8 @@ class Solution
          // Your code here
          if(root == NULL) return true;
          
+         if(root->left == NULL && !root->right) return true;
+         
          bool left = isSumTree(root->left);
          bool right = isSumTree(root->right);
          
@@ -118,8 +120,8 @@ class Solution
         //  cout<<leftsum<<" "<<rightsum<<endl;
          
          bool check ;
-         if(leftsum == rightsum && leftsum == 0) check = true;
-        else if(leftsum + rightsum == root->data) check = true;
+     
+         if(leftsum + rightsum == root->data) check = true;
          else check = false;
          
          if(left & right & check){

@@ -5,34 +5,63 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
 public:
-bool dfs(int start , vector<int>graph[] , vector<int>&colour,int parent){
+    
+    bool bfs(int node , int colour , vector<int> adj[] , vector<int> &vis){
+        queue<int> q;
+        q.push(node);
+        vis[node] = colour;
         
-        colour[start] = parent;
-        
-        for(auto it : graph[start]){
-                if(colour[it] == -1){
-                              if( dfs(it,graph,colour,!parent)== false) return false;
-                        }else if( colour[it] == colour[start]){
-                                return false;
-                        }
+        while(!q.empty()){
+            int front = q.front();
+            q.pop();
+            
+            for(auto it : adj[front]){
+                if(vis[it] == -1){
+                    vis[it] = !vis[front];
+                    q.push(it);
+                }else if( vis[it] == vis[front]){
+                    return false;
+                }
+             }
+            
+            
         }
         return true;
-        
+    }
+
+bool dfs(int start , int scol , vector<int> adj[] , vector<int> & vis){
+    
+    vis[start] = scol;
+    
+    for(auto it : adj[start]){
+        if(vis[it] ==  -1){
+            vis[it] = !scol;
+           if( dfs(it, !scol , adj,vis) == false) return false ;
+        }else if(vis[it] == vis[start]){
+            return false;
+        }
+    }
+    
+    return true;
+    
+    
+    
 }
 	bool isBipartite(int V, vector<int>adj[]){
 	    // Code here
-	    int n = V;
-	    vector<int> colour(n,-1);
-     
-            for(int i = 0 ; i < n ;i++){
-                    if(colour[i] == -1){
-                           if(dfs(i,adj,colour,0) == false)return false;
-                            
-                    }
-            }
-            
-            return true;
-         
+	    vector<int> vis(V,-1);
+	    
+	    for(int i = 0 ; i < V ; i++){
+	        if(vis[i] == -1){
+	            // node, colour , adjcency list , visted array
+	           // if(bfs(i,0,adj,vis) == false) return false;
+	           if(dfs(i,0,adj,vis )== false) return false;
+	        }
+	    }
+	    
+	    return true;
+	    
+	    
 	}
 
 };

@@ -4,42 +4,43 @@ using namespace std;
 
 // } Driver Code Ends
 class Solution {
+  public:
+    // Function to detect cycle in a directed graph.
     
-    bool dfs(int node , vector<int> adj[],vector<int> &vis){
-        
+    bool dfscheck(int node , vector<int> adj[], vector<int> &vis){
+        // making it visted
+        vis[node] = 1;
+        //making it path visted
         vis[node] = 2;
         
         for(auto it : adj[node]){
-            
             if(vis[it] == 0){
-                if(dfs(it,adj,vis) == true) return true;
-            }else if(vis[it] == 2) return true;
-            
+                if(dfscheck(it,adj,vis)) return true;
+            }else if(vis[it] == 2){
+                return true;
+            } 
         }
-        
-        
+        // just visted and not path visted;
         vis[node] = 1;
+        
         return false;
-        
-        
-        
         
     }
     
-  public:
-    // Function to detect cycle in a directed graph.
+    
+    
     bool isCyclic(int V, vector<int> adj[]) {
         // code here
-        
         vector<int> vis(V,0);
         
-        for(int i = 0; i < V ;i++){
-            if(vis[i] == 0){
-                if(dfs(i,adj,vis)) return true;
+        for(int i = 0 ; i < V ; i++){
+            if(!vis[i]){
+                if(dfscheck(i,adj,vis)) return true;
             }
         }
         
         return false;
+        
         
     }
 };

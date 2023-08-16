@@ -8,33 +8,30 @@ using namespace std;
 // User function Template for C++
 
 class Solution {
-
-private:
-
-void dfs(int row,int col , vector<vector<int>> &vis, vector<vector<int>> &grid ,vector<pair<int,int>> &vs, int row0 , int col0){
     
-    vis[row][col] = 1;
-    
-    vs.push_back({row - row0 , col - col0});
-    
-    int rowd[] = {-1,0,1,0};
-    int cold[] ={0,1,0,-1};
-     int n = grid.size();
-        int m = grid[0].size();
-    
-    for(int i = 0 ; i < 4 ; i++){
-        int nrow = row + rowd[i];
-        int ncol = col + cold[i];
+    void dfs(int row ,  int col ,vector<vector<int>>& grid, vector<vector<int>>& vis ,  
+    vector<pair<int,int>> &temp, int row0, int col0 ){
         
-        if(nrow >=0 && nrow <n && ncol >=0 && ncol <m && !vis[nrow][ncol] && grid[nrow][ncol] == 1){
-          dfs(nrow,ncol,vis,grid,vs,row0,col0);
-        }
+         int n = grid.size();
+        int m = grid[0].size();
+        
+        temp.push_back({row-row0,col-col0});
+        vis[row][col] = 1;
+        
+       int drow[] = {-1,0,1,0};
+       int dcol[] = {0,-1,0,1};
+       
+       for(int i = 0 ; i < 4 ; i++){
+           int nrow = row + drow[i];
+           int ncol = col + dcol[i];
+           
+           if(nrow < n && ncol < m && nrow >=0 && ncol >=0 && vis[nrow][ncol] != 1 &&
+           grid[nrow][ncol] == 1){
+               dfs(nrow,ncol,grid,vis,temp,row0,col0);
+           }
+       }
+        
     }
-    
-    
-    
-}
-    
     
     
   public:
@@ -43,21 +40,21 @@ void dfs(int row,int col , vector<vector<int>> &vis, vector<vector<int>> &grid ,
         int n = grid.size();
         int m = grid[0].size();
         
-        set<vector<pair<int,int>>> st;
-        vector<vector<int>> vis(n,vector<int>(m,0));
-        
-        for(int i = 0 ; i < n ; i++){
-            for(int j = 0 ; j < m ; j++){
-                if(!vis[i][j] && grid[i][j] == 1){
-                    vector<pair<int,int>> vs;
-                    dfs(i,j,vis,grid,vs,i,j);
-                    st.insert(vs);
-                }
+    vector<vector<int>> vis(n,vector<int>(m,0));
+    set<vector<pair<int,int>>> st;
+    for(int i = 0 ; i < n ;i++){
+        for(int j = 0 ; j < m ;j++){
+            if(!vis[i][j] && grid[i][j] == 1){
+            vector<pair<int,int>> temp;
+            dfs(i,j,grid,vis,temp,i,j);
+            st.insert(temp);
             }
         }
+    }
+    
+    
+    return st.size();
         
-        
-    return st.size();    
         
         
     }

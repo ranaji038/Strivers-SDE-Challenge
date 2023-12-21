@@ -40,31 +40,13 @@ struct Node
 
 class Solution
 {
-    private:
-    void doitforme(Node * node , vector<int> & ans){
-        
-        if(node == NULL) return ;
-        
-        ans.push_back(node->data);
-        
-        doitforme(node->left,ans);
-        doitforme(node->right,ans);
-        
-        
-        
-        
-        
-    }
-    
     public:
     //Function to return the level order traversal of a tree.
     vector<int> levelOrder(Node* node)
     {
       //Your code here
-      
+      if(node == NULL) return {};
       vector<int> ans;
-      
-      if(node == NULL) return ans;
       
       queue<Node *> q;
       q.push(node);
@@ -73,18 +55,20 @@ class Solution
           
           Node * temp = q.front();
           q.pop();
+          ans.push_back(temp->data);
+          if(temp->left != NULL){
+              q.push(temp->left);
+          }
           
-        if(temp != NULL){
-            ans.push_back(temp->data);
-        }
-        if(temp->left != NULL)
-        q.push(temp->left);
-        
-        if(temp->right != NULL)
-        q.push(temp->right);
+          if(temp->right != NULL) q.push(temp->right);
+          
+          
           
           
       }
+      
+      
+      
       return ans;
       
     }

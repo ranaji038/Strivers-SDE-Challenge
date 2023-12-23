@@ -126,34 +126,25 @@ struct Node
     }
 };
  */
- 
 
+void helper(Node * root , int level , vector<int> &ans){
+    if(root == NULL) return ;
+    
+    if(level == ans.size()) ans.push_back(root->data);
+    
+    helper(root->left, level +1 , ans);
+    helper(root->right, level +1 , ans);
+    
+}
 
 //Function to return a list containing elements of left view of the binary tree.
 vector<int> leftView(Node *root)
 {
    // Your code here
-   if(root == NULL) return {};
-    
-    vector<int> ans;
-    queue<Node * > q;
-    q.push(root);
-    
-    while(!q.empty()){
-        Node * top = q.front();
-        
-        int n = q.size();
-        for(int i = 0 ; i < n ; i++){
-            Node *temp = q.front();
-            if(temp->left != NULL) q.push(temp->left);
-            if(temp->right != NULL) q.push(temp->right);
-            q.pop();
-        }
-        
-       ans.push_back(top->data);
-        
-    }
-    
-    return ans;
+   
+   vector<int> ans;
+   helper(root,0,ans);
+   return ans;
+   
    
 }
